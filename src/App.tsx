@@ -2,7 +2,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { WagmiProvider } from 'wagmi'
 import { config } from '@/lib/wagmi'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Home from '@/pages/Home'
+import { BaseLayout } from './components/layout/BaseLayout'
+import { LoginPage } from './components/pages/LoginPage'
+
 
 // Placeholder Dashboards (We will build these next)
 const DonorDashboard = () => <div>Donor Dashboard</div>
@@ -15,13 +17,13 @@ function App() {
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         <Router>
-          <div className="min-h-screen bg-gray-50 text-gray-900 font-sans">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/donor" element={<DonorDashboard />} />
-              <Route path="/distributor" element={<DistributorDashboard />} />
-            </Routes>
-          </div>
+          <Routes>
+            <Route path="/" element={
+              <BaseLayout onConnectWallet={() => { }}>
+                <LoginPage onStartOnboarding={() => { }} />
+              </BaseLayout>
+            } />
+          </Routes>
         </Router>
       </QueryClientProvider>
     </WagmiProvider>
