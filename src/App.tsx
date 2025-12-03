@@ -1,17 +1,30 @@
-import './App.css'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { WagmiProvider } from 'wagmi'
+import { config } from '@/lib/wagmi'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Home from '@/pages/Home'
+
+// Placeholder Dashboards (We will build these next)
+const DonorDashboard = () => <div>Donor Dashboard</div>
+const DistributorDashboard = () => <div>Distributor Dashboard</div>
+
+const queryClient = new QueryClient()
 
 function App() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-2xl">
-        <h1 className="text-4xl font-bold text-gray-800 mb-4">
-          Charity DApp 🎉
-        </h1>
-        <p className="text-gray-600">
-          Tailwind CSS v4 is working perfectly!
-        </p>
-      </div>
-    </div>
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <div className="min-h-screen bg-gray-50 text-gray-900 font-sans">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/donor" element={<DonorDashboard />} />
+              <Route path="/distributor" element={<DistributorDashboard />} />
+            </Routes>
+          </div>
+        </Router>
+      </QueryClientProvider>
+    </WagmiProvider>
   )
 }
 
