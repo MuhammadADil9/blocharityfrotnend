@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { UserProfileForm } from "@/components/strcuture/card/UserProfileForm";
 import { RoleSelectionForm } from "@/components/strcuture/card/RoleSelectionForm";
@@ -9,7 +9,7 @@ import { LoginPage } from "@/components/pages/LoginPage";
 export default function AppRoutes() {
     const { isConnected, role, onboardingStep } = useAuth();
 
-    if (!isConnected) return <LoginPage onStartOnboarding={() => { }} />;
+    if (!isConnected) return <LoginPage />;
 
     if (role === null) return <div>Loading...</div>;
 

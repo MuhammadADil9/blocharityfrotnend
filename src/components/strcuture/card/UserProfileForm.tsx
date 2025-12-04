@@ -1,14 +1,10 @@
 import { useState } from "react";
 import { HorizontalNavbar } from "../../layout/HorizontalNavbar";
 import { VerticalSidebar } from "../../layout/VerticalNavbar";
+import { useAuth } from "@/context/AuthContext";
 
-interface UserProfileFormProps {
-    onNext: () => void;
-}
-
-export function UserProfileForm({
-    onNext,
-}: UserProfileFormProps) {
+export function UserProfileForm() {
+    const { setOnboardingStep } = useAuth();
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -33,7 +29,8 @@ export function UserProfileForm({
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        onNext();
+        // TODO: Save profile data to backend/local state if needed
+        setOnboardingStep(2);
     };
 
     return (

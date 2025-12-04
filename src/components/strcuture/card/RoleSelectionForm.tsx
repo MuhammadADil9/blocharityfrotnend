@@ -2,20 +2,23 @@ import { useState } from "react";
 import { HorizontalNavbar } from "../../layout/HorizontalNavbar"
 import { VerticalSidebar } from "../../layout/VerticalNavbar";
 import { ArrowLeft } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 
-interface RoleSelectionFormProps {
-    onBack: () => void;
-    onNext: (role: "donor" | "distributor") => void;
-}
-
-export function RoleSelectionForm({ onBack, onNext }: RoleSelectionFormProps) {
+export function RoleSelectionForm() {
+    const { setOnboardingStep } = useAuth();
     const [selectedRole, setSelectedRole] = useState<"donor" | "distributor" | "">("");
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (selectedRole) {
-            onNext(selectedRole);
+            // TODO: Call API to create user with selected role
+            // For now, we just refresh the page to trigger role check again (or update context if we had a setRole)
+            window.location.reload();
         }
+    };
+
+    const onBack = () => {
+        setOnboardingStep(1);
     };
 
     return (

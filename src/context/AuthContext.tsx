@@ -1,21 +1,35 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { useAccount } from "wagmi";
+import { createContext, useContext, useState } from "react";
+import { useAccount, useConnect, useDisconnect } from "wagmi";
+import { injected } from "wagmi/connectors";
 import { useUserRole } from "../features/auth/hooks/useUserRole";
 
 interface AuthState {
     address: string | undefined;
     isConnected: boolean;
     role: "donor" | "distributor" | "new" | null;
+    loading: boolean;
     onboardingStep: number;
     setOnboardingStep: (step: number) => void;
+    login: () => void;
+    logout: () => void;
 }
 
 const AuthContext = createContext<AuthState | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const { address, isConnected } = useAccount();
-    const { role, } = useUserRole();
+    const { connect } = useConnect();
+    const { disconnect } = useDisconnect();
+    const { role, loading } = useUserRole();
     const [onboardingStep, setOnboardingStep] = useState(1);
+
+    const login = () => {
+        connect({ connector: injected() });
+    };
+
+    const logout = () => {
+        disconnect();
+    };
 
     return (
         <AuthContext.Provider
@@ -23,8 +37,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 address,
                 isConnected,
                 role,
+                loading,
                 onboardingStep,
                 setOnboardingStep,
+                login,
+                logout,
             }}
         >
             {children}

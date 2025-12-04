@@ -8,7 +8,7 @@ interface BaseLayoutProps {
 export function BaseLayout({ children, onConnectWallet }: BaseLayoutProps) {
     return (
         <div className="min-h-screen bg-slate-950 text-white">
-            <LoginNavbar onConnectWallet={onConnectWallet} />
+            <LoginNavbar onConnect={onConnectWallet} />
 
             <main className="p-6">
                 {children}
