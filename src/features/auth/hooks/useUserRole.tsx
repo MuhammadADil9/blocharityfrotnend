@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import api from '@/lib/api';
-import { useAccount } from 'wagmi';
+import { useConnection } from 'wagmi';
 
 export function useUserRole() {
-    const { address, isConnected } = useAccount();
+    const { address, isConnected } = useConnection();
     const [role, setRole] = useState<'donor' | 'distributor' | 'new' | null>(null);
     const [loading, setLoading] = useState(false);
 
